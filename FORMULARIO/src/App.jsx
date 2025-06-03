@@ -1,27 +1,36 @@
+// Importa o arquivo de estilos CSS
 import './App.css'
+
+// Importa React e os hooks useState e useRef
 import { React, useState, useRef } from "react";
 
 function App() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [contact, setContact] = useState("");
-  const [gender, setGender] = useState("male");
+  // Cria estados para armazenar os dados do formulário
+  const [firstName, setFirstName] = useState(""); // Armazena o primeiro nome digitado
+  const [lastName, setLastName] = useState(""); // Armazena o sobrenome digitado
+  const [email, setEmail] = useState(""); // Armazena o email digitado
+  const [contact, setContact] = useState(""); // Armazena o número de telefone digitado
+  const [gender, setGender] = useState("male"); // Armazena o gênero selecionado (valor padrão é "male")
+
+  // Armazena as matérias selecionadas usando um objeto
   const [subjects, setSubjects] = useState({
     english: true,
     maths: false,
     physics: false,
   });
 
-  const [resume, setResume] = useState("");
-  const [url, setUrl] = useState("");
-  const [selectedOption, setSelectedOption] = useState("");
-  const [about, setAbout] = useState("");
+  const [resume, setResume] = useState(""); // Armazena o arquivo de currículo selecionado
+  const [url, setUrl] = useState(""); // Armazena o link digitado (URL)
+  const [selectedOption, setSelectedOption] = useState(""); // Armazena a opção escolhida no menu dropdown
+  const [about, setAbout] = useState(""); // Armazena o texto sobre o usuário
 
+  // Cria uma referência para o input de arquivo (resume)
   const fileInputRef = useRef(null);
 
+  // Função chamada quando o formulário é enviado
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Impede o recarregamento da página
+    // Mostra os dados digitados no console
     console.log(
       firstName,
       lastName,
@@ -36,13 +45,15 @@ function App() {
     );
   };
 
+  // Função para alternar o valor (marcado/desmarcado) das matérias
   const handleSubjectChange = (sub) => {
     setSubjects((prev) => ({
-      ...prev,
-      [sub]: !prev[sub],
+      ...prev,        // Mantém os valores anteriores
+      [sub]: !prev[sub], // Inverte o valor da matéria clicada (true → false ou false → true)
     }));
   };
 
+  // Função que limpa todos os campos do formulário
   const handleReset = () => {
     setFirstName("");
     setLastName("");
@@ -58,14 +69,16 @@ function App() {
     setUrl("");
     setSelectedOption("");
     setAbout("");
-    if (fileInputRef.current) fileInputRef.current.value = null;
+    if (fileInputRef.current) fileInputRef.current.value = null; // Limpa o campo de arquivo também
   };
 
+  // Conteúdo que será exibido na tela
   return (
     <div className="App">
       <h1>Form in React</h1>
       <fieldset>
         <form onSubmit={handleSubmit}>
+          {/* Campo de primeiro nome */}
           <label htmlFor="firstname">First Name</label>
           <input 
             type="text" 
@@ -76,6 +89,7 @@ function App() {
             required
           />
 
+          {/* Campo de sobrenome */}
           <label htmlFor="lastname">Last Name</label>
           <input 
             type="text" 
@@ -86,6 +100,7 @@ function App() {
             required
           />
 
+          {/* Campo de e-mail */}
           <label htmlFor="email">Enter Email</label>
           <input 
             type="email" 
@@ -96,6 +111,7 @@ function App() {
             required
           />
 
+          {/* Campo de telefone */}
           <label htmlFor="contact">Contact</label>
           <input 
             type="tel" 
@@ -106,8 +122,10 @@ function App() {
             required 
           />
 
+          {/* Campo de seleção de gênero */}
           <fieldset>
             <legend>Gender</legend>
+            {/* Opção masculino */}
             <input 
               type="radio" 
               name="gender"
@@ -117,6 +135,8 @@ function App() {
               onChange={(e) => setGender(e.target.value)}
             />
             <label htmlFor="male">Male</label><br />
+
+            {/* Opção feminino */}
             <input 
               type="radio" 
               name="gender" 
@@ -126,6 +146,8 @@ function App() {
               onChange={(e) => setGender(e.target.value)}
             />
             <label htmlFor="female">Female</label><br />
+
+            {/* Opção outro */}
             <input 
               type="radio" 
               name="gender" 
@@ -137,6 +159,7 @@ function App() {
             <label htmlFor="other">Other</label>
           </fieldset>
 
+          {/* Campo de seleção de matérias favoritas */}
           <label>Your best Subject</label>
           <input 
             type="checkbox" 
@@ -145,6 +168,7 @@ function App() {
             onChange={() => handleSubjectChange("english")}
           />
           <label htmlFor="english">English</label><br />
+
           <input 
             type="checkbox" 
             id="maths"
@@ -152,6 +176,7 @@ function App() {
             onChange={() => handleSubjectChange("maths")}
           />
           <label htmlFor="maths">Maths</label><br />
+
           <input 
             type="checkbox" 
             id="physics"
@@ -160,6 +185,7 @@ function App() {
           />
           <label htmlFor="physics">Physics</label>
 
+          {/* Upload de arquivo (currículo) */}
           <label htmlFor="file">Upload Resume</label>
           <input 
             type="file" 
@@ -169,6 +195,7 @@ function App() {
             required 
           />
 
+          {/* Campo de URL */}
           <label htmlFor="url">Enter URL</label>
           <input 
             type="url" 
@@ -179,6 +206,7 @@ function App() {
             required 
           />
 
+          {/* Menu dropdown (select) */}
           <label htmlFor="select">Select your choice</label>
           <select 
             id="select"
@@ -200,6 +228,7 @@ function App() {
             </optgroup>
           </select>
 
+          {/* Campo de texto grande (textarea) */}
           <label htmlFor="about">About</label>
           <textarea 
             id="about"
@@ -209,6 +238,7 @@ function App() {
             required
           ></textarea>
 
+          {/* Botões de reset e submit */}
           <button type="reset" onClick={handleReset}>
             Reset
           </button>
